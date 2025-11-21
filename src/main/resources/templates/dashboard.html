@@ -3,157 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Dashboard</title>
-
-    <!-- Bootstrap CSS -->
+    <title>My Quizzes</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
-            color: white;
-            padding-top: 20px;
-        }
-        .sidebar a {
-            color: white;
-            text-decoration: none;
-            display: block;
-            padding: 10px 20px;
-        }
-        .sidebar a:hover {
-            background-color: #495057;
-            border-radius: 5px;
-        }
-        .main-content {
-            padding: 20px;
-        }
-        .quiz-card {
-            margin-bottom: 20px;
-        }
+        body { background-color: #f8f9fa; }
+        .sidebar { min-height: 100vh; background-color: #343a40; color: white; padding-top: 20px; }
+        .sidebar .nav-link { color: white; }
+        .sidebar .nav-link.active { background-color: #495057; border-radius: 5px; }
+        .main-content { padding: 20px; }
+        .quiz-card { margin-bottom: 20px; }
     </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row">
+        <div th:replace="fragments/sidebar :: sidebar"></div>
 
-        <!-- Sidebar -->
-        <div class="col-md-3 col-lg-2 sidebar">
-            <h4 class="text-center">Dashboard</h4>
-            <a href="#" id="dashboard-link">My Quizzes</a>
-            <a href="#" id="add-quiz-link">Add Quiz</a>
-            <a href="#" id="profile-link">Manage Profile</a>
-            <a href="#" id="logout-link">Logout</a>
-        </div>
-
-        <!-- Main Content -->
         <div class="col-md-9 col-lg-10 main-content">
-            <!-- My Quizzes Section -->
-            <div id="dashboard-section">
-                <h3>My Quizzes</h3>
-                <div class="row" id="quiz-list">
-                    <!-- Example quiz card -->
-                    <div class="col-md-6 quiz-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Sample Quiz 1</h5>
-                                <p class="card-text">Description of the quiz...</p>
-                                <button class="btn btn-sm btn-primary">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
-                            </div>
+            <h3>My Quizzes</h3>
+            <div class="row">
+                <!-- Example quiz cards -->
+                <div class="col-md-6 quiz-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sample Quiz 1</h5>
+                            <p class="card-text">Description of the quiz...</p>
+                            <button class="btn btn-sm btn-primary">Edit</button>
+                            <button class="btn btn-sm btn-danger">Delete</button>
                         </div>
                     </div>
-                    <div class="col-md-6 quiz-card">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Sample Quiz 2</h5>
-                                <p class="card-text">Description of the quiz...</p>
-                                <button class="btn btn-sm btn-primary">Edit</button>
-                                <button class="btn btn-sm btn-danger">Delete</button>
-                            </div>
+                </div>
+                <div class="col-md-6 quiz-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Sample Quiz 2</h5>
+                            <p class="card-text">Description of the quiz...</p>
+                            <button class="btn btn-sm btn-primary">Edit</button>
+                            <button class="btn btn-sm btn-danger">Delete</button>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!-- Add Quiz Section -->
-            <div id="add-quiz-section" style="display: none;">
-                <h3>Add New Quiz</h3>
-                <form>
-                    <div class="mb-3">
-                        <label for="quiz-title" class="form-label">Quiz Title</label>
-                        <input type="text" class="form-control" id="quiz-title" placeholder="Enter title">
-                    </div>
-                    <div class="mb-3">
-                        <label for="quiz-description" class="form-label">Description</label>
-                        <textarea class="form-control" id="quiz-description" rows="3" placeholder="Enter description"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-success">Create Quiz</button>
-                </form>
-            </div>
-
-            <!-- Profile Section -->
-            <div id="profile-section" style="display: none;">
-                <h3>Manage Profile</h3>
-                <form>
-                    <div class="mb-3">
-                        <label for="first-name" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="first-name" placeholder="Enter first name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="last-name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="last-name" placeholder="Enter last name">
-                    </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter email">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Enter new password">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update Profile</button>
-                </form>
-            </div>
-
         </div>
+
     </div>
 </div>
-
-<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    // Simple section switcher
-    const dashboardLink = document.getElementById('dashboard-link');
-    const addQuizLink = document.getElementById('add-quiz-link');
-    const profileLink = document.getElementById('profile-link');
-
-    const dashboardSection = document.getElementById('dashboard-section');
-    const addQuizSection = document.getElementById('add-quiz-section');
-    const profileSection = document.getElementById('profile-section');
-
-    dashboardLink.addEventListener('click', () => {
-        dashboardSection.style.display = 'block';
-        addQuizSection.style.display = 'none';
-        profileSection.style.display = 'none';
-    });
-
-    addQuizLink.addEventListener('click', () => {
-        dashboardSection.style.display = 'none';
-        addQuizSection.style.display = 'block';
-        profileSection.style.display = 'none';
-    });
-
-    profileLink.addEventListener('click', () => {
-        dashboardSection.style.display = 'none';
-        addQuizSection.style.display = 'none';
-        profileSection.style.display = 'block';
-    });
-</script>
-
 </body>
 </html>

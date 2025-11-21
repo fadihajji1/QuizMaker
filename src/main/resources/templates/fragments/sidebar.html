@@ -1,0 +1,17 @@
+<div th:fragment="sidebar" class="col-md-3 col-lg-2 sidebar d-flex flex-column p-3 bg-dark text-white vh-100">
+    <h4 class="text-center mb-4">Dashboard</h4>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item mb-2">
+            <a class="nav-link text-white" th:href="@{/dashboard/}">My Quizzes</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link text-white" th:href="@{/dashboard/add-quiz}">Add Quiz</a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link text-white" th:href="@{/dashboard/profile}">Manage Profile</a>
+        </li>
+        <li class="nav-item mt-auto">
+            <a class="nav-link text-white" th:href="@{/api/auth/logout}">Logout</a>
+        </li>
+    </ul>
+</div>

@@ -14,4 +14,14 @@ public class DashboardController {
     public String dashboard() {
         return "dashboard";
     }
+
+    @GetMapping("/add-quiz")
+    public String addQuiz() {
+        return "add-quiz";
+    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
 }
