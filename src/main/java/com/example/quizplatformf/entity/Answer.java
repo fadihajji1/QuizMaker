@@ -7,12 +7,12 @@ import jakarta.persistence.*;
 public class Answer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long answerId;
     private String answer;
     private Boolean isCorrect;
 
     @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question_id;
+    @JoinColumn(name = "questionId")
+    private Question questionId;
 
 }

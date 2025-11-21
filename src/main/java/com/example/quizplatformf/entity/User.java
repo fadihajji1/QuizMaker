@@ -13,7 +13,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
     private String firstName;
     private String lastName;
     private String email;
@@ -22,7 +22,7 @@ public class User {
     private Role role;
     private Date createdAt;
 
-    @OneToMany(mappedBy = "created_by", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quiz> quizzes = new ArrayList<>();
 
     public User() {
@@ -37,7 +37,7 @@ public class User {
     }
 
     public Long getUser_id() {
-        return user_id;
+        return userId;
     }
 
     public String getPassword(){

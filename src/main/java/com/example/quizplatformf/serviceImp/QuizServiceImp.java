@@ -7,6 +7,7 @@ import com.example.quizplatformf.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -37,5 +38,9 @@ public class QuizServiceImp implements QuizService {
 
     public void deleteQuizById(Long id){
         quizRepository.deleteById(id);
+    }
+
+    public List<Quiz> getQuizByUserId(Long userId){
+        return quizRepository.findByUser_userId(userId);
     }
 }

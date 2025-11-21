@@ -10,15 +10,15 @@ import java.util.List;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long question_id;
+    private Long questionId;
     private String question;
     private Enum type;
     private int points;
 
     @ManyToOne
-    @JoinColumn(name = "quiz_id")
-    private Quiz quiz_id;
+    @JoinColumn(name = "quizId")
+    private Quiz quizId;
 
-    @OneToMany(mappedBy = "question_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "questionId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>();
 }

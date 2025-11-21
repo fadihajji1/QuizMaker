@@ -12,15 +12,15 @@ public class Quiz {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long quiz_id;
+    private Long quizId;
     private String title;
     private String description;
     private Duration duration;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User created_by;
+    @JoinColumn(name = "userId")
+    private User user;
 
-    @OneToMany(mappedBy = "quiz_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "quizId", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Question> questions = new ArrayList<>();
 }
