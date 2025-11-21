@@ -10,7 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.quizplatformf.dto.request.SignupRequest;
 import com.example.quizplatformf.dto.response.loginResponse;
-
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -20,7 +20,6 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
-    //Sign Up
     @PostMapping(value = "/signup", consumes = "application/json")
     public ResponseEntity<?> signupJson(@RequestBody SignupRequest request) {
         User savedUser = createAndSaveUser(request);
@@ -64,23 +63,23 @@ public class AuthController {
 
 
     @PostMapping(value = "/signin", consumes = "application/x-www-form-urlencoded")
-    public String signinForm(@ModelAttribute loginRequest loginRequest, Model model) {
+    public String signinForm(@ModelAttribute loginRequest loginRequest, Model model, RedirectAttributes redirectAttributes) {
 
         User user = userService.getUserByEmail(loginRequest.getEmail());
 
         if (user == null) {
-            model.addAttribute("error", "User not found!");
-            return "signin";
+            redirectAttributes.addFlashAttribute("loginError", "User not found!");
+            return "redirect:/signin";
         }
 
         if (!user.getPassword().equals(loginRequest.getPassword())) {
-            model.addAttribute("error", "Invalid password!");
-            return "signin";
+            redirectAttributes.addFlashAttribute("loginError", "Invalid username or password!");
+            return "redirect:/signin";
         }
 
         model.addAttribute("message", "Login successful!");
         model.addAttribute("user", user);
-        return "dashboard";
+        return "redirect:/dashboard/";
     }
 
 }
