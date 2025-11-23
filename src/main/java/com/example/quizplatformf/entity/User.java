@@ -48,5 +48,16 @@ public class User {
         return this.email;
     }
 
+    public String getFirstName() {return this.firstName;}
 
+    public String getLastName() {return this.lastName;}
+
+    public Role getRole() {return this.role;}
+
+    public Date getCreatedAt() {return this.createdAt;}
+
+    public void setFirstName(String firstName) {this.firstName = firstName;}
+    public void setLastName(String lastName) {this.lastName = lastName;}
+    public void setRole(Role role) {this.role = role;}
+    public void setEmail(String email) {this.email = email;}
 }

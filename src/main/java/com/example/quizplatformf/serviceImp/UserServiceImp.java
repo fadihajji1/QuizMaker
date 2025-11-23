@@ -31,4 +31,8 @@ public class UserServiceImp implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
+
+    public User getUserById(Long id) {
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }

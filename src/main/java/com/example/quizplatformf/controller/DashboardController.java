@@ -20,8 +20,4 @@ public class DashboardController {
         return "add-quiz";
     }
 
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
 }
