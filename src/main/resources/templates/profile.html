@@ -17,28 +17,28 @@
     <div class="row">
 
         <!-- Sidebar -->
-        <div th:replace="fragments/sidebar :: sidebar"></div>
+        <div th:replace="fragments/sidebar :: sidebar(userId=${userId})"></div>
 
         <!-- Main content -->
         <div class="col-md-9 col-lg-10 main-content">
             <div class="form-container">
                 <h3 class="mb-4">Manage Profile</h3>
-                <form th:action="@{/dashboard/profile}" method="post">
+                <form th:action="@{'/dashboard/profile/edit/' + ${userId}}" th:object="${userDto}" method="post">
                     <div class="mb-3">
                         <label for="first-name" class="form-label">First Name</label>
-                        <input type="text" class="form-control" id="first-name" name="firstName" placeholder="Enter first name" required>
+                        <input type="text" class="form-control" id="first-name" name="firstName" placeholder="Enter first name" required th:field="*{firstName}">
                     </div>
                     <div class="mb-3">
                         <label for="last-name" class="form-label">Last Name</label>
-                        <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter last name" required>
+                        <input type="text" class="form-control" id="last-name" name="lastName" placeholder="Enter last name" required th:field="*{lastName}">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required th:field="*{email}">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter new password" required th:field="*{password}">
                         <small class="text-muted">Leave blank if you don't want to change password</small>
                     </div>
                     <button type="submit" class="btn btn-primary mt-3">Update Profile</button>

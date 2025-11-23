@@ -1,6 +1,11 @@
 package com.example.quizplatformf.controller;
 
-import com.example.quizplatformf.dto.request.loginRequest;
+import com.example.quizplatformf.entity.User;
+import com.example.quizplatformf.security.CustomUserDetails;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,13 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
 
     @GetMapping("/")
-    public String dashboard() {
+    public String dashboard(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
+            return "redirect:/signin";
+        }
+
+        CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        model.addAttribute("userId", userDetails.getUser().getUser_id());
         return "dashboard";
     }
 
+
     @GetMapping("/add-quiz")
-    public String addQuiz() {
+    public String addQuiz(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+
+        // Also pass userId here if the sidebar needs it
+        if (userDetails != null) {
+            model.addAttribute("userId", userDetails.getId());
+        }
         return "add-quiz";
     }
-
 }

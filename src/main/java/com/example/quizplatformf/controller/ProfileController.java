@@ -37,7 +37,7 @@ public class ProfileController {
         model.addAttribute("userDto", dto);
         model.addAttribute("userId", id);
 
-        return "redirect:/dashboard/profile";
+        return "profile";
     }
 
     // Handle update submission
@@ -46,9 +46,8 @@ public class ProfileController {
             @PathVariable Long id,
             @ModelAttribute("userDto") UpdateUserRequest dto
     ) {
-        User user = userService.getUserById(Long id);
+        User user = userService.getUserById(id);
        //User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
-
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
         user.setEmail(dto.getEmail());
