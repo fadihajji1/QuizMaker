@@ -26,7 +26,7 @@ public class SignInFormController {
         if (logout != null && logout) {
             model.addAttribute("message", "Logged out successfully");
         }
-        return "signin"; // points to signin.html
+        return "signin";
     }
 
 }

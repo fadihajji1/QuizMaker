@@ -17,13 +17,13 @@
     <div class="row">
 
         <!-- Sidebar -->
-        <div th:replace="fragments/sidebar :: sidebar"></div>
+        <div th:replace="fragments/sidebar :: sidebar(userId=${userId})"></div>
 
         <!-- Main content -->
         <div class="col-md-9 col-lg-10 main-content">
             <div class="form-container">
                 <h3 class="mb-4">Add New Quiz</h3>
-                <form th:action="@{/dashboard/add}" method="post">
+                <form th:action="@{/quiz/create}" method="post">
                     <div class="mb-3">
                         <label for="quiz-title" class="form-label">Quiz Title</label>
                         <input type="text" class="form-control" id="quiz-title" name="title" placeholder="Enter title" required>

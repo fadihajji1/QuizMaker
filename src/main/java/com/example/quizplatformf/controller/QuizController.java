@@ -1,49 +1,56 @@
 package com.example.quizplatformf.controller;
 
 import com.example.quizplatformf.entity.Quiz;
+import com.example.quizplatformf.security.CustomUserDetails;
 import com.example.quizplatformf.service.QuizService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping("/api/quiz")
+@RequestMapping("/quiz")
 public class QuizController {
+
     private final QuizService quizService;
 
-    @PostMapping("/user/{userId}")
-    public ResponseEntity<Quiz> createQuiz(
-            @PathVariable Long userId,
-            @RequestBody Quiz quiz) {
-        return ResponseEntity.ok(quizService.createQuiz(quiz, userId));
+    // ---------------------- CREATE QUIZ ------------------------
+    @PostMapping("/create")
+    public String createQuiz(
+            @ModelAttribute Quiz quiz,
+            Authentication authentication
+    ) {
+        // get logged-in user
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getId();
+
+        Quiz savedQuiz = quizService.createQuiz(quiz, userId);
+
+        return "redirect:/quiz/" + savedQuiz.getQuizId() + "/edit";
     }
 
-    @GetMapping
-    public ResponseEntity<List<Quiz>> getAllQuiz() {
-        return ResponseEntity.ok(quizService.getQuizList());
+    // ---------------------- SHOW EDIT PAGE ----------------------
+    @GetMapping("/{id}/edit")
+    public String editQuizPage(@PathVariable Long id, Model model) {
+        Quiz quiz = quizService.getQuizById(id);
+        model.addAttribute("quiz", quiz);
+        return "quiz-edit";   // your HTML page name
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Quiz> getQuizById(@PathVariable Long id) {
-        return ResponseEntity.ok(quizService.getQuizById(id));
+    // ---------------------- UPDATE QUIZ -------------------------
+    @PostMapping("/{id}/update")
+    public String updateQuiz(@PathVariable Long id, @ModelAttribute Quiz updatedQuiz) {
+        updatedQuiz.setQuizId(id);
+        quizService.updateQuiz(updatedQuiz);
+        return "redirect:/quiz/" + id + "/edit?updated=true";
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @RequestBody Quiz updatedQuiz) {
-                return ResponseEntity.ok(quizService.updateQuiz(updatedQuiz));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteQuiz(@PathVariable Long id) {
+    // ---------------------- DELETE -------------------------
+    @PostMapping("/{id}/delete")
+    public String deleteQuiz(@PathVariable Long id) {
         quizService.deleteQuizById(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Quiz>> getQuizByUserId(@PathVariable Long userId) {
-        return ResponseEntity.ok(quizService.getQuizByUserId(userId));
+        return "redirect:/dashboard?deleted=true";
     }
 }
