@@ -33,9 +33,6 @@ public class AuthController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // ------------------ SIGNUP ------------------
-
-    // Signup JSON API
     @PostMapping(value = "/signup", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<?> signupJson(@RequestBody SignupRequest request) {
@@ -43,7 +40,6 @@ public class AuthController {
         return ResponseEntity.ok("User created with id: " + savedUser.getUser_id());
     }
 
-    // Signup Form
     @PostMapping(value = "/signup", consumes = "application/x-www-form-urlencoded")
     public String signupForm(@ModelAttribute SignupRequest request, RedirectAttributes redirectAttributes) {
         createAndSaveUser(request);
@@ -62,9 +58,6 @@ public class AuthController {
         return userService.createUser(user);
     }
 
-    // ------------------ SIGNIN ------------------
-
-    // JSON signin
     @PostMapping(value = "/signin", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<?> signinJson(@RequestBody loginRequest loginRequest) {
@@ -76,7 +69,6 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    // Form signin
     @PostMapping(value = "/signin", consumes = "application/x-www-form-urlencoded")
     public String signinForm() {
         return "redirect:/dashboard/";

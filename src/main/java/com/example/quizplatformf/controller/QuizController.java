@@ -16,13 +16,11 @@ public class QuizController {
 
     private final QuizService quizService;
 
-    // ---------------------- CREATE QUIZ ------------------------
     @PostMapping("/create")
     public String createQuiz(
             @ModelAttribute Quiz quiz,
             Authentication authentication
     ) {
-        // get logged-in user
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = userDetails.getId();
 
@@ -31,15 +29,13 @@ public class QuizController {
         return "redirect:/quiz/" + savedQuiz.getQuizId() + "/edit";
     }
 
-    // ---------------------- SHOW EDIT PAGE ----------------------
     @GetMapping("/{id}/edit")
     public String editQuizPage(@PathVariable Long id, Model model) {
         Quiz quiz = quizService.getQuizById(id);
         model.addAttribute("quiz", quiz);
-        return "quiz-edit";   // your HTML page name
+        return "quiz-edit";
     }
 
-    // ---------------------- UPDATE QUIZ -------------------------
     @PostMapping("/{id}/update")
     public String updateQuiz(@PathVariable Long id, @ModelAttribute Quiz updatedQuiz) {
         updatedQuiz.setQuizId(id);
@@ -47,7 +43,6 @@ public class QuizController {
         return "redirect:/quiz/" + id + "/edit?updated=true";
     }
 
-    // ---------------------- DELETE -------------------------
     @PostMapping("/{id}/delete")
     public String deleteQuiz(@PathVariable Long id) {
         quizService.deleteQuizById(id);
