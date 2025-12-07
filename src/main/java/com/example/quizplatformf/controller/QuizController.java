@@ -1,15 +1,18 @@
 package com.example.quizplatformf.controller;
 
+import com.example.quizplatformf.dto.QuizForm;
 import com.example.quizplatformf.entity.Quiz;
 import com.example.quizplatformf.security.CustomUserDetails;
 import com.example.quizplatformf.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.swing.*;
+import java.time.Duration;
 import java.util.List;
 
 @Controller
@@ -32,17 +35,37 @@ public class QuizController {
         return "quiz-list";
     }
 
+    @GetMapping("/add")
+    public String addQuiz(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
+
+        if (userDetails != null) {
+            model.addAttribute("userId", userDetails.getId());
+            model.addAttribute("quizForm", new QuizForm());
+        }
+        return "add-quiz";
+    }
+
     @PostMapping("/create")
     public String createQuiz(
-            @ModelAttribute Quiz quiz,
+            @ModelAttribute QuizForm quizForm,
             Authentication authentication
     ) {
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
         Long userId = userDetails.getId();
 
-        Quiz savedQuiz = quizService.createQuiz(quiz, userId);
+        Duration duration = quizForm.toDuration();
+        if (duration.isNegative() || duration.isZero()) {
+            duration = Duration.ofMinutes(3);
+        }
+        Quiz quiz = new Quiz();
 
-        return "redirect:/quiz/" + savedQuiz.getQuizId() + "/edit";
+        quiz.setTitle(quizForm.getTitle());
+        quiz.setDescription(quizForm.getDescription());
+        quiz.setDuration(duration);
+
+        quizService.createQuiz(quiz, userId);
+
+        return "redirect:/dashboard/quiz/list";
     }
 
     @GetMapping("/{id}/edit")
@@ -59,9 +82,9 @@ public class QuizController {
         return "redirect:/quiz/" + id + "/edit?updated=true";
     }
 
-    @PostMapping("/{id}/delete")
+    @PostMapping("/delete/{id}")
     public String deleteQuiz(@PathVariable Long id) {
         quizService.deleteQuizById(id);
-        return "redirect:/dashboard?deleted=true";
+        return "redirect:/dashboard/list";
     }
 }

@@ -1,5 +1,6 @@
 package com.example.quizplatformf.controller;
 
+import com.example.quizplatformf.dto.QuizForm;
 import com.example.quizplatformf.entity.User;
 import com.example.quizplatformf.security.CustomUserDetails;
 import jakarta.servlet.http.HttpSession;
@@ -27,14 +28,4 @@ public class DashboardController {
         return "dashboard";
     }
 
-
-    @GetMapping("/add-quiz")
-    public String addQuiz(@AuthenticationPrincipal CustomUserDetails userDetails, Model model) {
-
-        // Also pass userId here if the sidebar needs it
-        if (userDetails != null) {
-            model.addAttribute("userId", userDetails.getId());
-        }
-        return "add-quiz";
-    }
 }

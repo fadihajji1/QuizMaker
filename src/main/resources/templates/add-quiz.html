@@ -21,14 +21,41 @@
         <div class="col-md-9 col-lg-10 main-content">
             <div class="form-container">
                 <h3 class="mb-4">Add New Quiz</h3>
-                <form th:action="@{/quiz/create}" method="post">
+                <form th:object="${quizForm}" th:action="@{/dashboard/quiz/create}" method="post">
                     <div class="mb-3">
-                        <label for="quiz-title" class="form-label">Quiz Title</label>
-                        <input type="text" class="form-control" id="quiz-title" name="title" placeholder="Enter title" required>
+                        <label for="title" class="form-label">Quiz Title</label>
+                        <input type="text" class="form-control" id="title" name="title" th:field="*{title}" placeholder="Enter title" required>
                     </div>
                     <div class="mb-3">
                         <label for="quiz-description" class="form-label">Description</label>
-                        <textarea class="form-control" id="quiz-description" name="description" rows="4" placeholder="Enter description" required></textarea>
+                        <textarea class="form-control" id="quiz-description" name="description" th:field="*{description}" rows="4" placeholder="Enter description" required></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="mb-3">
+                            <label for="quiz-durationHours" class="form-label">Duration Hours</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="quiz-durationHours"
+                                   th:field="*{durationHours}"
+                                   min="0"
+                                   placeholder="Hours"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="quiz-durationMinutes" class="form-label">Duration Minutes</label>
+                            <input type="number"
+                                   class="form-control"
+                                   id="quiz-durationMinutes"
+                                   th:field="*{durationMinutes}"
+                                   min="0"
+                                   max="59"
+                                   placeholder="Minutes"
+                                   required>
+                        </div>
+
+
                     </div>
                     <button type="submit" class="btn btn-success mt-3">Create Quiz</button>
                 </form>

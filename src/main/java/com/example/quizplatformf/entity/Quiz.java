@@ -51,4 +51,27 @@ public class Quiz {
     public void setUser(User user) {
         this.user = user;
     }
+
+    public void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public Duration getDuration() {
+        return duration;
+    }
+
+    @Transient
+    public int getDurationInMinutes() {
+        return duration != null ? duration.toMinutesPart():0;
+    }
+
+    @Transient
+    public int getDurationInHours() {
+        return duration != null ? duration.toHoursPart():0;
+    }
+
+    @Transient
+    public void setDurationFromHoursAndMinutes(int hours, int minutes) {
+        duration = Duration.ofHours(hours).plusMinutes(minutes);
+    }
 }
