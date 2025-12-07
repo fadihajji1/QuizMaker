@@ -9,12 +9,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.*;
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/quiz")
+@RequestMapping("/dashboard/quiz")
 public class QuizController {
 
     private final QuizService quizService;
+
+    @GetMapping("/list")
+    public String listQuiz(
+            Model model,
+            Authentication authentication
+    ){
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Long userId = userDetails.getId();
+        List<Quiz> listQuizzes = quizService.getQuizzesByUserId(userId);
+        model.addAttribute("quizzes", listQuizzes);
+        model.addAttribute("userId", userId);
+        return "quiz-list";
+    }
 
     @PostMapping("/create")
     public String createQuiz(

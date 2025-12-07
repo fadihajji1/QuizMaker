@@ -49,7 +49,7 @@ public class QuizServiceImp implements QuizService {
         quizRepository.deleteById(id);
     }
 
-    public List<Quiz> getQuizByUserId(Long userId){
+    public List<Quiz> getQuizzesByUserId(Long userId){
         return quizRepository.findByUser_userId(userId);
     }
 }

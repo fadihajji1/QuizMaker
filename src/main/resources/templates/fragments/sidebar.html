@@ -1,8 +1,11 @@
-<div th:fragment="sidebar(userId)" class="col-md-3 col-lg-2 sidebar d-flex flex-column p-3 bg-dark text-white vh-100">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<div th:fragment="sidebar(userId)" class="col-md-3 col-lg-2 sidebar d-flex flex-column p-3 bg-dark text-white position-sticky top-0"
+     style="height: 100vh; overflow-y: auto;">
     <h4 class="text-center mb-4">Dashboard</h4>
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" th:href="@{/dashboard/}">My Quizzes</a>
+            <a class="nav-link text-white" th:href="@{/dashboard/quiz/list}">My Quizzes</a>
         </li>
         <li class="nav-item mb-2">
             <a class="nav-link text-white" th:href="@{/dashboard/add-quiz}">Add Quiz</a>
@@ -15,3 +18,5 @@
         </li>
     </ul>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
