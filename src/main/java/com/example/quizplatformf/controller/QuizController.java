@@ -85,6 +85,6 @@ public class QuizController {
     @PostMapping("/delete/{id}")
     public String deleteQuiz(@PathVariable Long id) {
         quizService.deleteQuizById(id);
-        return "redirect:/dashboard/list";
+        return "redirect:/dashboard/quiz/list";
     }
 }
