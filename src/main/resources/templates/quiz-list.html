@@ -24,7 +24,7 @@
                                         <p class="card-text" th:text="${quiz.description}"></p>
                                             <div class="d-flex">
                                                 <div class="me-2">
-                                                    <form th:action="@{/dashboard/quiz/delete/{id}(id=${quiz.quizId})}" method="post">
+                                                    <form th:action="@{/dashboard/quiz/edit/{id}(id=${quiz.quizId})}" method="get">
                                                         <button type="submit"
                                                                 class="btn btn-sm btn-primary"
                                                                 onclick=""

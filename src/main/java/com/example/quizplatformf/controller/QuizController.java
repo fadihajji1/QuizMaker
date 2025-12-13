@@ -68,18 +68,18 @@ public class QuizController {
         return "redirect:/dashboard/quiz/list";
     }
 
-    @GetMapping("/{id}/edit")
+    @GetMapping("/edit/{id}")
     public String editQuizPage(@PathVariable Long id, Model model) {
         Quiz quiz = quizService.getQuizById(id);
         model.addAttribute("quiz", quiz);
         return "quiz-edit";
     }
 
-    @PostMapping("/{id}/update")
+    @PostMapping("/update/{id}")
     public String updateQuiz(@PathVariable Long id, @ModelAttribute Quiz updatedQuiz) {
         updatedQuiz.setQuizId(id);
         quizService.updateQuiz(updatedQuiz);
-        return "redirect:/quiz/" + id + "/edit?updated=true";
+        return "redirect:/dashboard/quiz/list";
     }
 
     @PostMapping("/delete/{id}")

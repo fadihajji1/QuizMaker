@@ -1,5 +1,6 @@
 package com.example.quizplatformf.entity;
 
+import com.example.quizplatformf.entity.enums.Type;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -12,7 +13,8 @@ public class Question {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
     private String question;
-    private Enum type;
+    @Enumerated(EnumType.STRING)
+    private Type type;
     private int points;
 
     @ManyToOne

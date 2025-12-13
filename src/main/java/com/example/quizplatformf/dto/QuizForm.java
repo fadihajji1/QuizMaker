@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.Duration;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -31,4 +32,6 @@ public class QuizForm {
         int totalMinutes = h * 60 + m;
         return Duration.ofMinutes(totalMinutes);
     }
+
+    private List<QuestionDTO> questions;
 }
