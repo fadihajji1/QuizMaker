@@ -5,12 +5,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<style>
-    .custom-modal-width {
-        max-width: 40vw;
-    }
-</style>
-
 <body>
 <div class="container-fluid">
 
@@ -31,118 +25,22 @@
                         <textarea class="form-control" name="description" rows="3"
                                   th:text="${quiz.description}" required></textarea>
                     </div>
+                        <button class="btn btn-primary me-4">Save Changes</button>
+                </form>
 
-                    <button class="btn btn-primary">Save Changes</button>
+                <form th:action="@{/dashboard/quiz/edit/{id}/questions(id=${quiz.quizId})}" method="get">
+                    <button type="submit"
+                            class="btn btn-sm btn-success"
+                    >Manage Questions & Answers</button>
                 </form>
 
                 <hr>
 
-                <h3>Questions</h3>
-
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add Questions
-                </button>
-                <div class="modal fade" id="exampleModal" tabindex="-1">
-                    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                        <div class="modal-content">
-
-                            <div class="modal-header">
-                                <h5 class="modal-title">Add Questions</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-
-                            <div class="modal-body">
-
-                                <!-- QUESTIONS CONTAINER -->
-                                <div id="questionsContainer"></div>
-
-                                <!-- ADD QUESTION BUTTON -->
-                                <button type="button"
-                                        class="btn btn-success btn-sm mt-3"
-                                        onclick="addQuestion()">
-                                    + Add Question
-                                </button>
-
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                                    Close
-                                </button>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    let questionIndex = 0;
-
-    function addQuestion() {
-        const container = document.getElementById("questionsContainer");
-
-        const questionBlock = document.createElement("div");
-        questionBlock.className = "border rounded p-3 mb-3";
-
-        questionBlock.innerHTML = `
-  <div class="mb-2">
-      <label class="form-label">Question</label>
-      <input type="text"
-             class="form-control"
-             name="questions[${questionIndex}].text"
-             placeholder="Enter question">
-  </div>
-
-  <div class="answersContainer mb-2"></div>
-
-  <button type="button"
-          class="btn btn-success btn-sm mb-3"
-          onclick="addAnswer(this)">
-      + Add Answer
-  </button>
-
-  <button type="button"
-          class="btn btn-outline-danger btn-sm"
-          onclick="this.closest('.border').remove()">
-      Remove Question
-  </button>
-`;
-
-        container.appendChild(questionBlock);
-        questionIndex++;
-    }
-
-    function addAnswer(btn) {
-        const questionBlock = btn.closest('.border');
-        const container = questionBlock.querySelector('.answersContainer');
-        const questionIdx = Array.from(document.querySelectorAll('#questionsContainer > .border')).indexOf(questionBlock);
-        const answerIdx = container.children.length;
-
-        const answerDiv = document.createElement('div');
-        answerDiv.className = "d-flex gap-2 mb-2";
-
-        answerDiv.innerHTML = `
-        <input type="text"
-               class="form-control"
-               name="questions[${questionIdx}].answers[${answerIdx}]"
-               placeholder="Answer">
-        <button type="button"
-                class="btn btn-outline-danger btn-sm"
-                onclick="this.closest('div').remove()">
-            ✕
-        </button>
-    `;
-
-        container.appendChild(answerDiv);
-    }
-
-</script>
-
 </body>
 </html>

@@ -75,6 +75,13 @@ public class QuizController {
         return "quiz-edit";
     }
 
+    @GetMapping("/edit/{id}/questions")
+    public String QuizQuestions(@PathVariable Long id, Model model) {
+        Quiz quiz = quizService.getQuizById(id);
+        model.addAttribute("quiz", quiz);
+        return "manage-questions-answers";
+    }
+
     @PostMapping("/update/{id}")
     public String updateQuiz(@PathVariable Long id, @ModelAttribute Quiz updatedQuiz) {
         updatedQuiz.setQuizId(id);
@@ -87,4 +94,6 @@ public class QuizController {
         quizService.deleteQuizById(id);
         return "redirect:/dashboard/quiz/list";
     }
+
+
 }
