@@ -31,4 +31,7 @@ public class QuestionServiceImp implements QuestionService {
 
     public List<Question> getQuestionListByQuizId(Long id) {return questionRepository.findByQuiz_QuizId(id);}
 
+    public void deleteQuestionById(Long id) {
+        questionRepository.deleteById(id);
+    }
 }

@@ -53,6 +53,10 @@ public class Question {
         return quiz;
     }
 
+    public Long getQuizId() {
+        return quiz.getQuizId();
+    }
+
     public void setQuestion(String question) {
         this.question = question;
     }

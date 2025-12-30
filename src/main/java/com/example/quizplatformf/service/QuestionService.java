@@ -9,6 +9,7 @@ public interface QuestionService {
     List<Question> getQuestionList();
     List<Question> getQuestionListByQuizId(Long id);
     void deleteQuestion(Question question);
+    void deleteQuestionById(Long id);
     void updateQuestion(Question question);
     Question createQuestion(Question question);
 }

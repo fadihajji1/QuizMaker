@@ -92,30 +92,4 @@ public class QuizController {
         quizService.deleteQuizById(id);
         return "redirect:/dashboard/quiz/list";
     }
-
-    //Questions
-    //Display Questions of a Quiz
-    @GetMapping("/edit/{id}/questions")
-    public String QuizQuestions(@PathVariable Long id, Model model) {
-        Quiz quiz = quizService.getQuizById(id);
-        model.addAttribute("quiz", quiz);
-        List<Question> listQuestions = questionService.getQuestionListByQuizId(id);
-        model.addAttribute("questions", listQuestions);
-        model.addAttribute("questionForm", new Question());
-        return "manage-questions-answers";
-    }
-
-    //Add new Question to Quiz
-    @PostMapping("/add/{id}/questions")
-    public String addQuestions(@PathVariable Long id, @ModelAttribute QuestionForm questionForm) {
-        Question question = new Question();
-        question.setQuestion(questionForm.getQuestion());
-        question.setPoints(questionForm.getPoints());
-        question.setQuiz(quizService.getQuizById(id));
-        questionService.createQuestion(question);
-        return "redirect:/dashboard/quiz/edit/" + id + "/questions";
-
-    }
-
-
 }
