@@ -29,5 +29,6 @@ public class QuestionServiceImp implements QuestionService {
         return questionRepository.save(question);
     }
 
+    public List<Question> getQuestionListByQuizId(Long id) {return questionRepository.findByQuiz_QuizId(id);}
 
 }

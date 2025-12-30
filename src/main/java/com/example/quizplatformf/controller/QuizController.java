@@ -1,8 +1,11 @@
 package com.example.quizplatformf.controller;
 
+import com.example.quizplatformf.dto.QuestionForm;
 import com.example.quizplatformf.dto.QuizForm;
+import com.example.quizplatformf.entity.Question;
 import com.example.quizplatformf.entity.Quiz;
 import com.example.quizplatformf.security.CustomUserDetails;
+import com.example.quizplatformf.service.QuestionService;
 import com.example.quizplatformf.service.QuizService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -21,6 +24,7 @@ import java.util.List;
 public class QuizController {
 
     private final QuizService quizService;
+    private final QuestionService questionService;
 
     @GetMapping("/list")
     public String listQuiz(
@@ -75,12 +79,6 @@ public class QuizController {
         return "quiz-edit";
     }
 
-    @GetMapping("/edit/{id}/questions")
-    public String QuizQuestions(@PathVariable Long id, Model model) {
-        Quiz quiz = quizService.getQuizById(id);
-        model.addAttribute("quiz", quiz);
-        return "manage-questions-answers";
-    }
 
     @PostMapping("/update/{id}")
     public String updateQuiz(@PathVariable Long id, @ModelAttribute Quiz updatedQuiz) {
@@ -93,6 +91,30 @@ public class QuizController {
     public String deleteQuiz(@PathVariable Long id) {
         quizService.deleteQuizById(id);
         return "redirect:/dashboard/quiz/list";
+    }
+
+    //Questions
+    //Display Questions of a Quiz
+    @GetMapping("/edit/{id}/questions")
+    public String QuizQuestions(@PathVariable Long id, Model model) {
+        Quiz quiz = quizService.getQuizById(id);
+        model.addAttribute("quiz", quiz);
+        List<Question> listQuestions = questionService.getQuestionListByQuizId(id);
+        model.addAttribute("questions", listQuestions);
+        model.addAttribute("questionForm", new Question());
+        return "manage-questions-answers";
+    }
+
+    //Add new Question to Quiz
+    @PostMapping("/add/{id}/questions")
+    public String addQuestions(@PathVariable Long id, @ModelAttribute QuestionForm questionForm) {
+        Question question = new Question();
+        question.setQuestion(questionForm.getQuestion());
+        question.setPoints(questionForm.getPoints());
+        question.setQuiz(quizService.getQuizById(id));
+        questionService.createQuestion(question);
+        return "redirect:/dashboard/quiz/edit/" + id + "/questions";
+
     }
 
 

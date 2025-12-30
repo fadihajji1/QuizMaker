@@ -33,5 +33,5 @@ public class QuizForm {
         return Duration.ofMinutes(totalMinutes);
     }
 
-    private List<QuestionDTO> questions;
+    private List<QuestionForm> questions;
 }
